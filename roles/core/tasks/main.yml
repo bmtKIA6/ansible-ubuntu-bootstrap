@@ -1,0 +1,12 @@
+---
+
+- name: Install necessary packages
+  apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+    - acl
+    - git
+    - vim
+    - nano
+
+- name: Update authorized keys
+  authorized_keys: user=ubuntu key="{{ authorized_pubkey }}"
