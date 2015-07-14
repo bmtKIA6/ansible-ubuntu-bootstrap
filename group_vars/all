@@ -1,3 +1,4 @@
 ---
 
-authorized_pubkey: 
+authorized_pubkey: ~/.ssh/val_id_rsa.pub
+

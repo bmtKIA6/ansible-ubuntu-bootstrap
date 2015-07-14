@@ -1,12 +1,45 @@
 ---
 
-- name: Install necessary packages
-  apt: name={{ item }} update_cache=yes state=latest
+- name: Add Webupd8team jadk repository
+  apt_repository: repo='ppa:webupd8team/java' state=present
+
+
+- name: Accept SUN license
+  shell: "echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections"
+
+  
+- name: Install core packages
+  apt: name={{ item }} update_cache=yes state=latest force=yes
   with_items:
     - acl
+    - bundler
+    - curl
     - git
-    - vim
     - nano
+    - nodejs
+    - npm
+    - oracle-java7-installer
+    - oracle-java7-set-default
+    - vim
+    - wget
+    
+- name: Update cache
+  apt: update_cache=yes
+
+- name: Upgrade to latest
+  apt: upgrade=dist
 
 - name: Update authorized keys
-  authorized_keys: user=ubuntu key="{{ authorized_pubkey }}"
+  authorized_key: user=ubuntu key="{{ lookup('file', 'authorized_pubkey') }}"
+
+- name: Fix node/nodejs ubuntu naming
+  shell: ln -s /usr/bin/nodejs /usr/bin/node
+  args:
+    creates: /usr/bin/node
+
+- name: Install bower and gulp
+  npm: name={{ item }} global=yes
+  with_items:
+    - bower
+    - gulp
+

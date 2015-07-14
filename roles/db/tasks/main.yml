@@ -1,0 +1,10 @@
+---
+
+- name: Install mysql packages
+  apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+    - mysql-server
+    - mysql-client
+    - python-mysqldb
+    - sqlite3
+

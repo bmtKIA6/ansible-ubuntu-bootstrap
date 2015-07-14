@@ -1,0 +1,13 @@
+
+* Overview
+
+This repository contains the basic LAMP ubuntu configuration, includng multitude of
+the roles I most commonly use:
+
+- web
+- php
+- jenkins
+
+
+* How To Use
+
